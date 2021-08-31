@@ -75,10 +75,13 @@
                             'container' => 'nav',
                             'container_class' => "header__nav",
                             'after' => '<button class="submenu-open"><span></span></button>',
+                            'depth' => 3,
                             'walker' => new My_Menu_Walker(),
                         )
                     );
                     ?>
+
+                    <?php get_search_form($args); ?>
                 </div>
             </section>
             <!-- 1.2.HEADER NAVIGATION MENU END -->

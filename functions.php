@@ -216,12 +216,15 @@ function my_filter_head()
 	remove_action('wp_head', '_admin_bar_bump_cb');
 }
 
+
+
+
+
 // ADD CUSTOM CLASSES FOR <a> IN PRIMARY MENU
 function my_menu_a_class($atts, $item, $args, $depth)
 {
 	if (
 		$depth == 0
-
 	) {
 		$atts['class'] = (!empty($atts['class'])) ? "menu-a" : 'menu-a';
 	}
@@ -240,21 +243,35 @@ class My_Menu_Walker extends Walker_Nav_Menu
 	// }
 	function start_lvl(&$output, $item, $depth = 0, $args = [])
 	{
-		$output .= "<div class = 'header__sub-content'> <div class='header__nav-submenu'> <ul class='header__nav-submenu-1'>";
-		$output .= '<div>Casuals</div>';
-		$output .= $item->title;
+		if (
+			$depth == 1
+		) {
+			$output .= "<div class = 'header__sub-content'> <div class='header__nav-submenu'><ul class='header__nav-submenu-1'>";
+		} else {
+			$output .= "<ul>";
+		}
+
+		// $output .= "<div class = 'header__sub-content'> <div class='header__nav-submenu'> <ul class='header__nav-submenu-1'>";
+		// $output .= $item->title;
+
 	}
-	function end_lvl(&$output, $depth = 0, $args = null)
+	function end_lvl(&$output, $item, $depth = 0, $args = [])
 	{
-		$output .= ' <div class="header__submenu-sale"><div> Autumn sale! </div><span> up to 50% off</span></div>';
 		$output .= "</ul>";
+		if (
+			$depth == 1
+		) {
+			$output .= '<div class="header__submenu-sale"><div> Autumn sale! </div><span> up to 50% off</span></div>';
+		}
 	}
 	function start_el(&$output, $item, $depth = 0, $args = [], $id = 0)
 	{
+
 		$output .= "<li class='" . implode(" ", $item->classes) . "'>";
 
 		if (
-			in_array('menu-item-has-children', $item->classes)
+			in_array('menu-item-has-children', $item->classes) &&
+			$depth === 0
 		) {
 			$output .= "<a class = 'header__sub-parent menu-a' href = '" . $item->url . "'>";
 		} else {
@@ -268,5 +285,9 @@ class My_Menu_Walker extends Walker_Nav_Menu
 		if ($args->walker->has_children) {
 			$output .= "<button class='submenu-open'><span></span></button>";
 		}
+	}
+
+	function end_el(&$output, $item, $depth = 0, $args = null)
+	{
 	}
 }

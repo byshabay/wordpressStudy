@@ -1025,7 +1025,7 @@ body.active main, body.active footer{
 }
 
 .common-banner{
-    background: url("../images/lb-banner.png") center no-repeat;
+    background: url("images/lb-banner.png") center no-repeat;
     background-size: cover;
     margin-top: 70px;
     text-transform: uppercase;
@@ -1268,7 +1268,7 @@ input::-webkit-search-results-decoration {
     position: absolute;
     top: 7px;
     right: 5px;
-    background: url("../images/search.png") center no-repeat;
+    background: url("images/search.png") center no-repeat;
     background-size: cover;
 }
 .header__sub-content{
@@ -1284,9 +1284,18 @@ input::-webkit-search-results-decoration {
     z-index: 1;
     display: none;
 }
-
+.header__sub-content .header__nav-submenu-1 .menu-a{
+    font-family: var(--montserrat-bold);
+}
+.header__sub-content .header__nav-submenu-1{
+    margin: 0 20px 0 0;
+}
+.header__sub-content .header__nav-submenu  .header__submenu-sale{
+    margin: 60px auto 0;
+}
 .header__nav-submenu{
-    display: flex;    
+    display: flex;   
+    flex-direction: column; 
 }
 .header__nav-submenu div{
     margin-bottom: 30px;
@@ -1296,10 +1305,45 @@ input::-webkit-search-results-decoration {
     line-height: 30px;
     font-size: var(--text_13);
     color: var(--light-grey);
+
 }
 .header__nav-submenu-1 {
     text-transform: none;
+    display: flex;
 
+}
+.header__sub-content .header__sub-content{
+    position: relative;
+    background-color: var(--dirty-white);
+    padding: 0;
+    font-size: var(--text_13);
+    font-weight: bold;
+    color: var(--grey);
+    margin-top: 0px;
+    box-shadow: none;
+    z-index: 1;
+    display: block;
+}
+.header__sub-content a{
+    text-transform: lowercase;
+    display: block;  
+}
+.header__sub-content .header__sub-content .header__nav-submenu-1{
+    flex-direction: column;
+    font-family: var(--montserrat-light);
+}
+.header__sub-content a::first-letter{
+    text-transform: capitalize;
+}
+.header__sub-content .header__sub-content .header__nav-submenu-1 a.menu-a{
+    font-family: var(--montserrat-light);
+    color: var(--grey);
+}
+.header__sub-content .header__nav-submenu div{
+    margin: 30px 0 0;
+}
+.header__sub-content .header__sub-content .header__submenu-sale{
+    display: none;
 }
 .header__nav-submenu-2 {
     margin: 0 0 0 20px;
