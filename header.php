@@ -25,8 +25,6 @@
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
     <div id="page" class="site">
-        <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e('Skip to content', 'ave'); ?></a>
-
         <header id="masthead" class="site-header header">
             <!-- 1.1.HEADER TOP MENU START -->
             <section class="header__top-menu ">
@@ -82,6 +80,9 @@
                     ?>
 
                     <?php get_search_form($args); ?>
+                    <div class="header__burger">
+                        <span></span>
+                    </div>
                 </div>
             </section>
             <!-- 1.2.HEADER NAVIGATION MENU END -->

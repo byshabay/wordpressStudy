@@ -54,6 +54,8 @@ if (!function_exists('ave_setup')) :
 		register_nav_menus(
 			array(
 				'menu-1' => esc_html__('Primary', 'ave'),
+				'footer-menu' => esc_html__('footer-menu', 'ave'),
+				'social' => esc_html__('social', 'ave'),
 			)
 		);
 
@@ -106,7 +108,6 @@ if (!function_exists('ave_setup')) :
 	}
 endif;
 add_action('after_setup_theme', 'ave_setup');
-
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
  *
@@ -154,6 +155,10 @@ function ave_scripts()
 	if (is_singular() && comments_open() && get_option('thread_comments')) {
 		wp_enqueue_script('comment-reply');
 	}
+
+	wp_enqueue_script('my-jquery', get_template_directory_uri() . '/js/jquery.js');
+
+	wp_enqueue_script('my-script', get_template_directory_uri() . '/js/script.js');
 }
 add_action('wp_enqueue_scripts', 'ave_scripts');
 
@@ -192,22 +197,6 @@ function no_wordpress_errors()
 
 add_filter('login_errors', 'no_wordpress_errors');
 
-// Calc reading time 
-
-function reading_time()
-{
-	$content = get_post_field('post_content', $post->ID);
-	$word_count = str_word_count(strip_tags($content));
-	$readingtime = ceil($word_count / 200);
-	if ($readingtime == 1) {
-		$timer = " minute";
-	} else {
-		$timer = " minutes";
-	}
-	$totalreadingtime = $readingtime . $timer;
-	return $totalreadingtime;
-}
-
 // DELETE MARGIN-TOP !important
 add_action('get_header', 'my_filter_head');
 
@@ -224,7 +213,8 @@ function my_filter_head()
 function my_menu_a_class($atts, $item, $args, $depth)
 {
 	if (
-		$depth == 0
+		$depth == 0 &&
+		$args->theme_location == 'menu-1'
 	) {
 		$atts['class'] = (!empty($atts['class'])) ? "menu-a" : 'menu-a';
 	}
@@ -236,30 +226,21 @@ add_filter('nav_menu_link_attributes', 'my_menu_a_class', 10, 4);
 class My_Menu_Walker extends Walker_Nav_Menu
 {
 
-
-
-	// function end_el(&$output, $item, $depth = 0, $args = null)
-	// {
-	// }
-	function start_lvl(&$output, $item, $depth = 0, $args = [])
+	function start_lvl(&$output, $depth = 0, $args = null)
 	{
 		if (
-			$depth == 1
+			$depth = 1
 		) {
 			$output .= "<div class = 'header__sub-content'> <div class='header__nav-submenu'><ul class='header__nav-submenu-1'>";
 		} else {
 			$output .= "<ul>";
 		}
-
-		// $output .= "<div class = 'header__sub-content'> <div class='header__nav-submenu'> <ul class='header__nav-submenu-1'>";
-		// $output .= $item->title;
-
 	}
-	function end_lvl(&$output, $item, $depth = 0, $args = [])
+	function end_lvl(&$output, $depth = 0, $args = null)
 	{
 		$output .= "</ul>";
 		if (
-			$depth == 1
+			$depth = 1
 		) {
 			$output .= '<div class="header__submenu-sale"><div> Autumn sale! </div><span> up to 50% off</span></div>';
 		}
