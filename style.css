@@ -1013,7 +1013,7 @@ html{
 }
 body{
     position: relative;
-    padding-bottom: 700px;
+    /* padding-bottom: 700px; */
     min-height: 100vh;
 }
 body.active{
@@ -1859,6 +1859,112 @@ input::-webkit-search-results-decoration {
 
 /* COMMON END */
 
+/* HOME PAGE START */
+
+/* 2.HOME MAIN START */
+
+/* 2.1.HOME BANNER START */
+.main{
+    position: relative;
+    width: 100%;
+    padding-top: 50px;
+}
+.main .banner .container{
+    text-align: right;
+    width: 90%;
+}
+.banner{
+    position: relative;
+    width: 100%;
+    height: 920px;
+    background-size: cover;
+    padding-top: 300px;
+    z-index: 0;
+}
+.banner__h1{
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    max-width: var(--max-width);
+}
+.banner__btn{
+    display: inline-block;
+    text-transform: uppercase;
+    color: var(--grey);
+    font-weight: bold;
+    border: 2px solid var(--grey);
+    padding: 22px 32px ;
+    font-size: var(--text_21);
+    letter-spacing: 6px;
+    transition: 0.5s;
+    width: 30%;
+    margin-top: 100px;
+    margin-right: 12%;
+    text-align: center;
+}
+.banner__btn:hover{
+    color: #fff;
+    background-color: var(--light-blue);
+    border-color: var(--light-blue);
+    transition: 0.7s;
+}
+.banner__btn:visited{
+    color: var(--grey);
+}
+/* 2.1.HOME BANNER END */
+
+/* 2.3.HOME LOOKBOOK START */
+.lookbook{
+    display: flex;
+    text-align: right;
+    justify-content: space-between;
+}
+.lookbook__item{
+    width: 32%;
+    padding: 60px 30px 30px;
+}
+.lookbook__item h2, .lookbook__item span{
+    color: var(--dark-grey);
+    font-size: var(--text_48);
+    
+}
+.lookbook__item h2{
+    font-family: var(--montserrat-bold);
+    text-transform: uppercase;
+}
+.lookbook__item span{
+    font-family: var(--montserrat-light);
+    text-transform: uppercase;
+}
+.lookbook__item p{
+    color: var(--grey);
+    font-size: var(--text_15);
+    padding: 15px 0 0 50%;
+    display: block;
+}
+.lookbook__men{
+    background: url("images/men_lb.png") no-repeat;
+    background-size: cover;
+}
+.lookbook__women{
+    background: url("images/womeb_lb.png") no-repeat;
+    background-size: cover;
+}
+.lookbook__your{
+    background: url("images/your_lb.png") no-repeat;
+    background-size: cover;
+}
+
+.lookbook__view{
+    width: 40%;   
+    margin: 40px 60%;
+}
+
+/* 2.3.HOME LOOKBOOK END */
+
+/* 2. HOME MAIN END */
+
+/* HOME PAGE END */
 
 
 /* FONTS START */

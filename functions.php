@@ -272,3 +272,28 @@ class My_Menu_Walker extends Walker_Nav_Menu
 	{
 	}
 }
+
+// BANNER START
+
+function bannerAve()
+{
+	echo esc_html_e(get_theme_mod('banner_setting'));
+}
+
+add_action('add_banner', 'bannerAve');
+
+function banner_btnName()
+{
+	echo esc_html_e(get_theme_mod('banner_btnName'));
+}
+
+add_action('add_bannerBtnName', 'banner_btnName');
+
+function banner_btnUrl()
+{
+	echo esc_html_e(get_theme_mod('banner_btnUrl'));
+}
+
+add_action('add_bannerBtnUrl', 'banner_btnUrl');
+
+// BANNER END
