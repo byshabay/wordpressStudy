@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -297,3 +296,201 @@ function banner_btnUrl()
 add_action('add_bannerBtnUrl', 'banner_btnUrl');
 
 // BANNER END
+
+// HOME LOOKBOOK START
+
+function hl_img()
+{
+	echo esc_html_e(get_theme_mod('homeLookbook_img'));
+}
+
+add_action('homelookbook_img', 'hl_img');
+
+function hl_h1()
+{
+	echo esc_html_e(get_theme_mod('homeLookbook_h1'));
+}
+
+add_action('homelookbook_h1', 'hl_h1');
+
+function hl_h2()
+{
+	echo esc_html_e(get_theme_mod('homeLookbook_h2'));
+}
+
+add_action('homelookbook_h2', 'hl_h2');
+
+function hl_p()
+{
+	echo esc_html_e(get_theme_mod('homeLookbook_p'));
+}
+
+add_action('homelookbook_p', 'hl_p');
+
+// HOME LOOKBOOK END
+
+// HOME CATALOG START
+
+function show_product_short_description()
+{
+	global $post;
+
+	$product = wc_get_product($post->ID);
+
+	if ($tmp_desc = $product->get_short_description()) {
+		echo " . $tmp_desc .";
+	}
+}
+
+add_action('woocommerce_after_shop_loop_item_title', 'show_product_short_description');
+
+// HOME CATALOG END
+
+// ADD TO CART START
+
+/**
+ * Get the add to cart template for the loop.
+ *
+ * @param array $args Arguments.
+ */
+function woocommerce_template_loop_add_to_cart($args = array())
+{
+	global $product;
+
+	echo "<div class = 'product__btn'>";
+
+	if ($product) {
+		$defaults = array(
+			'quantity'   => 1,
+			'class'      => implode(
+				' ',
+				array_filter(
+					array(
+						'button',
+						'product__cart',
+						'product_type_' . $product->get_type(),
+						$product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '',
+						$product->supports('ajax_add_to_cart') && $product->is_purchasable() && $product->is_in_stock() ? 'ajax_add_to_cart' : '',
+					)
+				)
+			),
+			'attributes' => array(
+				'data-product_id'  => $product->get_id(),
+				'data-product_sku' => $product->get_sku(),
+				'aria-label'       => $product->add_to_cart_description(),
+				'rel'              => 'nofollow',
+			),
+		);
+
+		$args = apply_filters('woocommerce_loop_add_to_cart_args', wp_parse_args($args, $defaults), $product);
+
+		if (isset($args['attributes']['aria-label'])) {
+			$args['attributes']['aria-label'] = wp_strip_all_tags($args['attributes']['aria-label']);
+		}
+
+		wc_get_template('loop/add-to-cart.php', $args);
+	}
+	echo "</div>";
+	echo '<div class="product__btn">' . do_shortcode('[woosw]') . '</div>';
+?>
+	<a class="product__btn" href="<?= $product->get_permalink() ?>">
+		<div class="product__size"></div>
+	</a>
+<?php
+}
+
+// ADD TO CART END
+
+// DESCRIPTION OF PRODUCT START 
+
+function woocommerce_template_loop_product_title()
+{
+	echo '<div class="product__descr"> <h2 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . get_the_title() . '</h2>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}
+
+// DESCRTIPTION OF PRODUCT END
+
+// HOME CATALOG START
+
+function add_popular_product_to_home()
+{
+	$query = new WP_Query(['post_type' => 'product']);
+	while ($query->have_posts()) {
+		$query->the_post();
+
+		if (get_field('popular')[0] == 'popular') {
+			$id = get_the_ID();
+			$product = new WC_Product($id);
+			ave_product_constructor($product);
+		}
+	}
+	wp_reset_postdata();
+}
+
+add_action('ave_home_catalog_popular', 'add_popular_product_to_home');
+
+function add_new_product_to_home()
+{
+	$query = new WP_Query(['post_type' => 'product']);
+	while ($query->have_posts()) {
+		$query->the_post();
+
+		if (get_field('popular')[0] == 'new') {
+			$id = get_the_ID();
+			$product = new WC_Product($id);
+			ave_product_constructor($product);
+		}
+	}
+	wp_reset_postdata();
+}
+
+add_action('ave_home_catalog_new', 'add_new_product_to_home');
+
+function ave_product_constructor($product)
+{
+?>
+	<div class="product">
+		<div class="product__price">
+			<sup><?= get_woocommerce_currency_symbol(); ?></sup>
+			<?= $product->get_regular_price($context = 'view'); ?>
+			<?= $product->get_sale_price($context = 'view'); ?>
+		</div>
+		<div class="product__info">
+			<a href="<?= $product->get_permalink() ?>">
+				<img src="http://study.ivit.pro/wp-content/themes/ave/images/info.png" alt=""> </a>
+		</div>
+		<div class="product__main-img">
+			<?= $product->get_image($size = 'woocommerce_thumbnail', $attr = array(), $placeholder = true); ?>
+		</div>
+		<div class="product__descr">
+			<div class="product__name">
+				<a href="<?= $product->get_permalink() ?>">
+					<?php the_title(); ?>
+				</a>
+			</div>
+			<div>
+				<?= $product->get_description($context = 'view'); ?>
+			</div>
+
+			<?php
+			echo '<div class="product__btns">';
+			do_action('woocommerce_after_shop_loop_item');
+			echo '</div>';
+			?>
+
+
+		</div>
+		<div class="product__mini-imgs">
+			<img class="product__mini" src="<?= wp_get_attachment_url($product->get_gallery_image_ids($context = 'view')[0]) ?>">
+			<img class="product__mini" src="<?= wp_get_attachment_url($product->get_gallery_image_ids($context = 'view')[1]) ?>">
+		</div>
+
+
+
+	</div>
+<?php
+}
+
+// add_action('product_contructor', 'ave_product_constructor');
+
+// HOME CATALOG END

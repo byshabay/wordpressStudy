@@ -117,8 +117,8 @@ function ave_customize_register($wp_customize)
 
 	// 2.1.HOME LOOKBOOK SECTION START
 
-	$wp_customize->add_section('homeLoolbook', array(
-		'title' => 'Настройки блока LOOKBOOK на домашней странице',
+	$wp_customize->add_section('homeLookbook', array(
+		'title' => 'Настройка блока LB home',
 	));
 
 	// 2.1.HOME LOOKBOOK SECTION END
@@ -145,14 +145,41 @@ function ave_customize_register($wp_customize)
 
 	// 2.3.HOME LOOKBOOK CONTROL START
 
-	// $wp_customize->add_control(new banner_Control(
-	// 	$wp_customize,
-	// 	'homeLookbook_img',
-	// 	array(
-	// 		'label' => 'Настройки картинки блока 1', 
-	// 		'section' => 'homeLookbook',
-	// 	)
-	// ))
+	$wp_customize->add_control(new banner_Control(
+		$wp_customize,
+		'homeLookbook_img',
+		array(
+			'label' => 'Настройки картинки блока 1',
+			'section' => 'homeLookbook',
+			'setting' => 'homeLookbook_img'
+		)
+	));
+	$wp_customize->add_control(new banner_Control(
+		$wp_customize,
+		'homeLookbook_h1',
+		array(
+			'label' => 'Настройки h1 блока 1',
+			'section' => 'homeLookbook',
+			'setting' => 'homeLookbook_h1'
+		)
+	));
+	$wp_customize->add_control(new banner_Control(
+		$wp_customize,
+		'homeLookbook_h2',
+		array(
+			'label' => 'Настройки h2 блока 1',
+			'section' => 'homeLookbook',
+			'setting' => 'homeLookbook_h2'
+		)
+	));
+	$wp_customize->add_control(new banner_Control(
+		$wp_customize,
+		'homeLookbook_p',
+		array(
+			'label' => 'Настройки p блока 1',
+			'section' => 'homeLookbook',
+		)
+	));
 
 	// 2.3.HOME LOOKBOOK CONTROL END
 
